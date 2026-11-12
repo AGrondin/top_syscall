@@ -71,6 +71,8 @@ int gadget_count_syscall(struct trace_event_raw_sys_enter *ctx)
 	if (value) {
 		/* Multiple CPUs can update this process; plain ++ loses
 		 * increments. */
+		bpf_printk("gadget: increasing top_syscall count for pid %d, syscall %d",
+			   key.process_id, key.syscall_raw);
 		__sync_fetch_and_add(&value->calls, 1);
 		return 0;
 	}
